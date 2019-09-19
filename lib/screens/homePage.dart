@@ -97,7 +97,11 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    Future<List<Organization>> org=s.getOrgList();
+   getLocalData();
+  }
+
+  getLocalData(){
+     Future<List<Organization>> org=s.getOrgList();
     org.then((res){
       setState(() {
         orgIndex=0;
@@ -182,7 +186,55 @@ class _HomePageState extends State<HomePage> {
       }
     }
   }
+Data _data; 
+getOrg(){
+  print("@PPPPPPPPPPPPPPP@");
+   Future fetchPosts(http.Client client) async {
+   if(token!=''){
+ var response=await http.get(URL_GETORG,headers:{"Authorization": "$token"} );
 
+    print(response.body.toString());
+    print(response.statusCode);
+  if(response.statusCode==200){
+   final data = json.decode(response.body);
+   if(data["message"].compareTo("Successful")==0) {
+     if (data["data"]["organizations"] == null) {
+return "yo";
+     }
+     else {
+       _data = Data.fromJson(data["data"]);
+       print(data);
+       s.setOrgList(_data.organization);
+       getLocalData();
+       return _data;
+     }
+   }
+  
+     }
+  else{
+    return "Server Error";
+  }
+   }
+ }
+   return FutureBuilder(
+
+            future: fetchPosts(http.Client()),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.data == null) {
+                return Container(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+
+                );
+              }
+              else {
+                return Container();
+              }
+            });
+      
+
+}
   bool remove = true;
 
   @override
@@ -241,7 +293,7 @@ actions: <Widget>[
                         child: ListView(
                             children: <Widget>[
                               Container(
-                                  height: double.parse((70*orgList.length).toString()),
+                                  height: double.parse((80*orgList.length).toString()),
                                   child:ListView.builder(
                                       itemCount: orgList.length,
                                       itemBuilder: (BuildContext context,int index){
@@ -251,22 +303,23 @@ actions: <Widget>[
                                                 orgIndex=index;
                                                 orgName=orgList[index].name;
                                               });
+                                               Navigator.pop(context);
                                             },
                                             child:Container(
                                               child:Row(
                                                 children: <Widget>[
-                                                  Flexible(child: orgList[orgIndex].tag=="default_image"?Container(
+                                                  Flexible(child: orgList[index].tag=="default_image"?Container(
                                                     margin: EdgeInsets.all(16),
                                                     padding: EdgeInsets.all(16),
                                                     decoration: BoxDecoration(
                                                       color:Colors.blueAccent,
                                                       shape: BoxShape.circle,
                                                     ),
-                                                    child: Text(orgList[orgIndex].name.substring(0,1).toUpperCase(),style:TextStyle(fontSize: 21,color: Colors.white),),
+                                                    child: Text(orgList[index].name.substring(0,1).toUpperCase(),style:TextStyle(fontSize: 21,color: Colors.white),),
                                                   ):Container(
                                                     padding: EdgeInsets.only(
                                                         right: 20.0, left: 30.0, top: 16.0),
-                                                    child: Image.asset(orgList[orgIndex].tag,
+                                                    child: Image.asset(orgList[index].tag,
                                                         width: 90.0,
                                                         height: 90.0,
                                                         fit: BoxFit.cover),
@@ -315,9 +368,11 @@ actions: <Widget>[
 //                                  ],
 //                                ),),
 //
-          Container(height: 1,margin: EdgeInsets.all(10),color: Colors.grey,),
+                             Container(height: 1,margin: EdgeInsets.all(16),
+                             padding: EdgeInsets.all(8),
+                             color: Colors.grey,),
 
-          GestureDetector(
+            GestureDetector(
                 behavior: HitTestBehavior.translucent,
                 onTap: (){
                   s.setLoginCheck(false);
@@ -326,11 +381,10 @@ actions: <Widget>[
                 },
                 child: Container(
                   child: Center(child:Container(
-                    padding: EdgeInsets.all(10.0),
                     child: Text("Create or Join",style: TextStyle(fontSize: 16),),
                   )),
                 )),
-                Container(height: 1,margin: EdgeInsets.all(8),color: Colors.grey,),
+                Container(height: 1,margin: EdgeInsets.all(16),color: Colors.grey,),
           GestureDetector(
             behavior: HitTestBehavior.translucent,
             onTap: (){
@@ -340,11 +394,10 @@ actions: <Widget>[
             },
             child: Container(
               child: Center(child:Container(
-                padding: EdgeInsets.all(10.0),
               child: Text("Logout",style: TextStyle(fontSize: 16),),
               )),
               )),
-              Container(height: 1,margin: EdgeInsets.all(8),color: Colors.grey,),
+              Container(height: 1,margin: EdgeInsets.all(16),color: Colors.grey,),
                             ]
                         )
 
@@ -463,7 +516,7 @@ actions: <Widget>[
         child: ListView(
           children: <Widget>[
           Container(
-            height: double.parse((70*orgList.length).toString()),
+            height: double.parse((80*orgList.length).toString()),
             child:ListView.builder(
               itemCount: orgList.length,
                 itemBuilder: (BuildContext context,int index){
@@ -473,22 +526,23 @@ actions: <Widget>[
                       orgIndex=index;
                       orgName=orgList[index].name;
                     });
+                    Navigator.pop(context);
                   },
                   child:Container(
                 child:Row(
                   children: <Widget>[
-                    Flexible(child: orgList[orgIndex].tag=="default_image"?Container(
+                    Flexible(child: orgList[index].tag=="default_image"?Container(
                       margin: EdgeInsets.all(16),
                       padding: EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         color:Colors.blueAccent,
                         shape: BoxShape.circle,
                       ),
-                      child: Text(orgList[orgIndex].name.substring(0,1).toUpperCase(),style:TextStyle(fontSize: 21),),
+                      child: Text(orgList[index].name.substring(0,1).toUpperCase(),style:TextStyle(fontSize: 21,color: Colors.white),),
                     ):Container(
                       padding: EdgeInsets.only(
                           right: 20.0, left: 30.0, top: 16.0),
-                      child: Image.asset(orgList[orgIndex].tag,
+                      child: Image.asset(orgList[index].tag,
                           width: 90.0,
                           height: 90.0,
                           fit: BoxFit.cover),
@@ -535,7 +589,9 @@ actions: <Widget>[
 //      ),flex: 1,)
 //             ],
 //           ),),
-Container(height: 1,margin: EdgeInsets.all(8),color: Colors.grey,),
+  Container(height: 1,margin: EdgeInsets.all(16),
+                             padding: EdgeInsets.all(8),
+                             color: Colors.grey,),
 
             GestureDetector(
                 behavior: HitTestBehavior.translucent,
@@ -549,7 +605,7 @@ Container(height: 1,margin: EdgeInsets.all(8),color: Colors.grey,),
                     child: Text("Create or Join",style: TextStyle(fontSize: 16),),
                   )),
                 )),
-                Container(height: 1,margin: EdgeInsets.all(8),color: Colors.grey,),
+                Container(height: 1,margin: EdgeInsets.all(16),color: Colors.grey,),
           GestureDetector(
             behavior: HitTestBehavior.translucent,
             onTap: (){
@@ -562,10 +618,7 @@ Container(height: 1,margin: EdgeInsets.all(8),color: Colors.grey,),
               child: Text("Logout",style: TextStyle(fontSize: 16),),
               )),
               )),
-              Container(height: 1,margin: EdgeInsets.all(8),color: Colors.grey,),
-//            IconButton(icon: Icon(Icons.check_box_outline_blank),onPressed: (){
-//
-//            },)
+              Container(height: 1,margin: EdgeInsets.all(16),color: Colors.grey,),
             
          ]
             )

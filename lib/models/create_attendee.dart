@@ -1,35 +1,46 @@
-class CreateAttendee{
-  String name;
-  String registrationNumber;
-  String email;
-  String phoneNumber;
-  String gender;
-  String eventName;
-  CreateAttendee({
-    this.name,
-    this.registrationNumber,
-    this.email,
-    this.phoneNumber,
-    this.gender,
-    this.eventName
-  });
-  factory CreateAttendee.toJson(Map<String,dynamic> json){
-    return CreateAttendee(
+// import 'package:json_annotation/json_annotation.dart';
 
-    );
-  }
-}
+// part 'create_attendee.g.dart';
 
 
+// class bulk{
+//   String eventName;
+//   String organisation;
+//   List<CreateAttendee> attendee;
+// }
 
-abstract class View {
+// class CreateAttendee{
+//   String name;
+//   String registrationNumber;
+//   String email;
+//   String phoneNumber;
+//   String gender;
+//   CreateAttendee({
+//     this.name,
+//     this.registrationNumber,
+//     this.email,
+//     this.phoneNumber,
+//     this.gender,
+//   });
 
-}
+//     factory CreateAttendee.toJson(Map<String,dynamic> json) => _$CreateAttendeeFromJson<T>(json);
 
-abstract class Model {
+//   Map<String, dynamic> fromJson() => _$CreateAttendeeToJson(this);
+// }
 
-}
+// class _Converter<T> implements JsonConverter<T, Object> {
+//   const _Converter();
 
-abstract class Presenter {
+//   @override
+//   T fromJson(Object json) {
+//     // TODO: implement fromJson
+//     return CreateAttendee.fromJson(json) as T;
+//   }
 
-}
+//   @override
+//   Object toJson(T object) {
+//     // TODO: implement toJson
+//     return object;
+//   }
+
+// }

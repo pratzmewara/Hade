@@ -241,16 +241,15 @@ class CreateEventPage extends StatefulWidget{
                                           .accentColor,
                                       primaryColorDark: Colors.grey
                                   ),
-                                  child: DateTimePickerFormField(
+                                  child:
+                                  DateTimePickerFormField(
                                     inputType: inputType1,
                                     format: formats[inputType1],
                                     editable: editable,
                                     decoration: InputDecoration(
-                                     // contentPadding: EdgeInsets.all(10.0) ,
                                         border: OutlineInputBorder(),
                                         hintText: 'From',
                                         labelText: 'Date',
-                                       // labelStyle: TextStyle(fontSize: 15.0),
                                         hasFloatingPlaceholder: false),
                                     onChanged: (dt) =>
                                         setState(() {
@@ -915,13 +914,14 @@ class CreateEventPage extends StatefulWidget{
         body["event"]["campusEngineerRequest"] = '$campeng';
         body["event"]["duration"] = '$duration';
         print(body);
+        print(token);
 
 
         Future fetchPosts(http.Client client) async {
           var response = await http.post(
               URL_CREATEEVENT, headers: {"Authorization": "$token"},
               body: json.encode(body));
-
+print(response.body);
 
           final data = json.decode(response.body);
           if (data['error'] == null) {
