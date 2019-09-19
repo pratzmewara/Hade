@@ -315,9 +315,9 @@ actions: <Widget>[
 //                                  ],
 //                                ),),
 //
-                             Container(height: 1,margin: EdgeInsets.all(8),color: Colors.grey,),
+          Container(height: 1,margin: EdgeInsets.all(10),color: Colors.grey,),
 
-            GestureDetector(
+          GestureDetector(
                 behavior: HitTestBehavior.translucent,
                 onTap: (){
                   s.setLoginCheck(false);
@@ -326,6 +326,7 @@ actions: <Widget>[
                 },
                 child: Container(
                   child: Center(child:Container(
+                    padding: EdgeInsets.all(10.0),
                     child: Text("Create or Join",style: TextStyle(fontSize: 16),),
                   )),
                 )),
@@ -339,6 +340,7 @@ actions: <Widget>[
             },
             child: Container(
               child: Center(child:Container(
+                padding: EdgeInsets.all(10.0),
               child: Text("Logout",style: TextStyle(fontSize: 16),),
               )),
               )),

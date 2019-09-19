@@ -241,15 +241,16 @@ class CreateEventPage extends StatefulWidget{
                                           .accentColor,
                                       primaryColorDark: Colors.grey
                                   ),
-                                  child:
-                                  DateTimePickerFormField(
+                                  child: DateTimePickerFormField(
                                     inputType: inputType1,
                                     format: formats[inputType1],
                                     editable: editable,
                                     decoration: InputDecoration(
+                                     // contentPadding: EdgeInsets.all(10.0) ,
                                         border: OutlineInputBorder(),
                                         hintText: 'From',
                                         labelText: 'Date',
+                                       // labelStyle: TextStyle(fontSize: 15.0),
                                         hasFloatingPlaceholder: false),
                                     onChanged: (dt) =>
                                         setState(() {
