@@ -1,4 +1,4 @@
-# hade
+# Hades
 
 A new Flutter project.
 
