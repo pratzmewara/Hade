@@ -1,6 +1,6 @@
-# hade
+# Hades
 
-A new Flutter project.
+This project is for better event manager. A new Flutter project.
 
 ## Getting Started
 
